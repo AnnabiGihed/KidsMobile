@@ -10,12 +10,11 @@ package Entities;
  * @author mmsalemi
  */
 public class Vaccine {
-    int id;    
+    public int id;    
     String name;
     int age;
     String description;
     String effetnegatif;
-    String address;
 
     public Vaccine() {
     }
@@ -26,7 +25,6 @@ public class Vaccine {
         this.age = age;
         this.description = description;
         this.effetnegatif = effetnegatif;
-        this.address = address;
     }
 
     public int getId() {
@@ -49,10 +47,6 @@ public class Vaccine {
         return effetnegatif;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -73,10 +67,6 @@ public class Vaccine {
         this.effetnegatif = effetnegatif;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    
     
     
     
