@@ -4,7 +4,6 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.Log;
 import com.codename1.io.NetworkManager;
-import com.codename1.io.rest.Rest;
 import com.codename1.processing.Result;
 import com.codename1.ui.Button;
 import com.codename1.ui.Form;
@@ -19,11 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Login extends Form
 {
@@ -104,8 +100,10 @@ public class Login extends Form
             if(Resualt != null)
             {
                 MyApplication.CurrentUser.setUserName((String)Resualt.get("username"));
-                MyApplication.CurrentUser.setUserName((String)Resualt.get("password"));
-                MyApplication.CurrentUser.setUserName((String)Resualt.get("role"));
+                MyApplication.CurrentUser.setPassword((String)Resualt.get("password"));
+                //MyApplication.CurrentUser.setUserName((String)Resualt.get("valid"));
+                MainMenu Menu = new MainMenu("Menu");
+                Menu.show();
             }
         }
         catch(IOException err) 
