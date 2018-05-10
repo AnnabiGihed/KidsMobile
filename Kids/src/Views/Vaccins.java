@@ -6,7 +6,7 @@
 package Views;
 
 import Entities.Vaccine;
-import Services.VaccinService;
+//import Services.VaccinService;
 import com.codename1.io.Log;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
@@ -30,37 +30,37 @@ public class Vaccins extends Form{
     Label ageLabel;
     Label descreiptionLabel;
     Label effetnegatifLabel;
-    VaccinService vservice = new VaccinService();
+    //VaccinService vservice = new VaccinService();
     
     
 
  public Form InitInterface()
     {
             
-            ArrayList<Vaccine> lst = vservice.getList();
+           // ArrayList<Vaccine> lst = vservice.getList();
             Container list = new Container (BoxLayout.y());
             list.setScrollableY(true);
-            for(Vaccine s : lst) {
-                Button b = new Button(s.getName());
-                idLabel = new Label(String.valueOf(s.getId()));
-                nameLabel = new Label("name :"+s.getName());
-                ageLabel = new Label("age :"+String.valueOf(s.getAge()));
-                descreiptionLabel = new Label("description :"+s.getDescription());
-                effetnegatifLabel = new Label("effet negatif :"+s.getEffetnegatif());
-                list.add(idLabel);
-                list.add(nameLabel);
-                list.add(ageLabel);
-                list.add(descreiptionLabel);
-                list.add(effetnegatifLabel);
-                try {
-                Label i = new Label();
-                Image img = Image.createImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxRj0cAi1nyQT25Rg1LvRa4rIvUNRXuTdHlHPLUIXYE9UxAXU");
-                i.setIcon(img);
-                } catch (Exception e) {
-                }
-                
-                b.addActionListener(e -> Log.p("You picked: " + b.getText()));
-            }
+//            for(Vaccine s : lst) {
+//                Button b = new Button(s.getName());
+//                idLabel = new Label(String.valueOf(s.getId()));
+//                nameLabel = new Label("name :"+s.getName());
+//                ageLabel = new Label("age :"+String.valueOf(s.getAge()));
+//                descreiptionLabel = new Label("description :"+s.getDescription());
+//                effetnegatifLabel = new Label("effet negatif :"+s.getEffetnegatif());
+//                list.add(idLabel);
+//                list.add(nameLabel);
+//                list.add(ageLabel);
+//                list.add(descreiptionLabel);
+//                list.add(effetnegatifLabel);
+//                try {
+//                Label i = new Label();
+//                Image img = Image.createImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxRj0cAi1nyQT25Rg1LvRa4rIvUNRXuTdHlHPLUIXYE9UxAXU");
+//                i.setIcon(img);
+//                } catch (Exception e) {
+//                }
+//                
+//                b.addActionListener(e -> Log.p("You picked: " + b.getText()));
+//            }
             Form f = new Form();
             f.add(list);
             return f;
@@ -91,13 +91,13 @@ public class Vaccins extends Form{
     }
 
 
-    public VaccinService getVservice() {
-        return vservice;
-    }
-
-    public void setVservice(VaccinService vservice) {
-        this.vservice = vservice;
-    }
+//    public VaccinService getVservice() {
+//        return vservice;
+//    }
+//
+//    public void setVservice(VaccinService vservice) {
+//        this.vservice = vservice;
+//    }
 
     public Label getIdLabel() {
         return idLabel;
