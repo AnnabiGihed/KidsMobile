@@ -15,6 +15,7 @@ public class Vaccine {
     int age;
     String description;
     String effetnegatif;
+    float price;
 
     public Vaccine() {
     }
@@ -65,6 +66,14 @@ public class Vaccine {
 
     public void setEffetnegatif(String effetnegatif) {
         this.effetnegatif = effetnegatif;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     
