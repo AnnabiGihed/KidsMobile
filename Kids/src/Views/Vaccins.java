@@ -6,14 +6,18 @@
 package Views;
 
 import Entities.Vaccine;
-//import Services.VaccinService;
+import Services.VaccinService;
 import com.codename1.io.Log;
 import com.codename1.ui.Button;
+import com.codename1.ui.Component;
+import static com.codename1.ui.ComponentSelector.$;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.table.TableLayout;
 import java.util.ArrayList;
@@ -28,41 +32,71 @@ public class Vaccins extends Form{
     Label idLabel;
     Label nameLabel;
     Label ageLabel;
-    Label descreiptionLabel;
+    Label descriptionLabel;
     Label effetnegatifLabel;
-    //VaccinService vservice = new VaccinService();
+    Label priceLabel;
+    VaccinService vservice = new VaccinService();
     
+    
+    private Label createSeparator() {
+        Label sep = new Label();
+        sep.setTextPosition(Component.RIGHT);
+        sep.setUIID("Separator");
+        sep.setShowEvenIfBlank(true);
+        return sep;
+    }
     
 
  public Form InitInterface()
     {
-            
-           // ArrayList<Vaccine> lst = vservice.getList();
-            Container list = new Container (BoxLayout.y());
-            list.setScrollableY(true);
-//            for(Vaccine s : lst) {
-//                Button b = new Button(s.getName());
-//                idLabel = new Label(String.valueOf(s.getId()));
-//                nameLabel = new Label("name :"+s.getName());
-//                ageLabel = new Label("age :"+String.valueOf(s.getAge()));
-//                descreiptionLabel = new Label("description :"+s.getDescription());
-//                effetnegatifLabel = new Label("effet negatif :"+s.getEffetnegatif());
-//                list.add(idLabel);
-//                list.add(nameLabel);
-//                list.add(ageLabel);
-//                list.add(descreiptionLabel);
-//                list.add(effetnegatifLabel);
-//                try {
-//                Label i = new Label();
-//                Image img = Image.createImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxRj0cAi1nyQT25Rg1LvRa4rIvUNRXuTdHlHPLUIXYE9UxAXU");
-//                i.setIcon(img);
-//                } catch (Exception e) {
-//                }
-//                
-//                b.addActionListener(e -> Log.p("You picked: " + b.getText()));
-//            }
-            Form f = new Form();
-            f.add(list);
+             ArrayList<Vaccine> lst = vservice.getList();
+            Container ContainerVaccins = new Container (BoxLayout.y());
+            for(Vaccine s : lst) {
+                
+        Label iconInjection = new Label();  
+        iconInjection.setTextPosition(Component.RIGHT);
+        iconInjection.setUIID("iconInjection");
+        iconInjection.setShowEvenIfBlank(true);
+                
+                
+                
+                Button b = new Button(s.getName());
+                Container c = new Container(new BorderLayout());
+                idLabel = new Label(String.valueOf(s.getId()));
+                idLabel.setUIID("IdLabel");
+                priceLabel = new Label(String.valueOf(s.getPrice()) +" TND");
+                priceLabel.setUIID("priceLabel");
+                nameLabel = new Label(s.getName());
+                nameLabel.setUIID("nameLabel");
+                
+                
+              
+                
+                c.addComponent(BorderLayout.WEST, nameLabel);
+                c.addComponent(BorderLayout.EAST, priceLabel);
+                ageLabel = new Label("Age : "+String.valueOf(s.getAge())+ " mois");
+                ageLabel.setUIID("ageLabel");
+                descriptionLabel = new Label(s.getDescription().substring(0,55)+"...");
+                descriptionLabel.setUIID("descriptionLabel");
+                effetnegatifLabel = new Label("effet negatif :"+s.getEffetnegatif());
+                effetnegatifLabel.setUIID("effetnegativeLabel");
+                Label separator = this.createSeparator();
+                ContainerVaccins.add(c);
+                ContainerVaccins.add(ageLabel);
+                ContainerVaccins.add(descriptionLabel);
+                ContainerVaccins.add(separator);
+                
+                try {
+                Label i = new Label();
+                Image img = Image.createImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxRj0cAi1nyQT25Rg1LvRa4rIvUNRXuTdHlHPLUIXYE9UxAXU");
+                i.setIcon(img);
+                } catch (Exception e) {
+                }
+                
+                b.addActionListener(e -> Log.p("You picked: " + b.getText()));
+            }
+            Form f = new Form("Liste des vaccins", new FlowLayout());
+            f.add(ContainerVaccins);
             return f;
     }
     
@@ -91,13 +125,13 @@ public class Vaccins extends Form{
     }
 
 
-//    public VaccinService getVservice() {
-//        return vservice;
-//    }
-//
-//    public void setVservice(VaccinService vservice) {
-//        this.vservice = vservice;
-//    }
+    public VaccinService getVservice() {
+        return vservice;
+    }
+
+    public void setVservice(VaccinService vservice) {
+        this.vservice = vservice;
+    }
 
     public Label getIdLabel() {
         return idLabel;
@@ -124,11 +158,11 @@ public class Vaccins extends Form{
     }
 
     public Label getDescreiptionLabel() {
-        return descreiptionLabel;
+        return descriptionLabel;
     }
 
     public void setDescreiptionLabel(Label descreiptionLabel) {
-        this.descreiptionLabel = descreiptionLabel;
+        this.descriptionLabel = descreiptionLabel;
     }
 
     public Label getEffetnegatifLabel() {
