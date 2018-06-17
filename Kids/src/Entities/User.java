@@ -3,6 +3,7 @@ package Entities;
 
 public class User 
 {
+    protected int id;
     protected String UserName;
     protected String Password;
     protected String Role;
@@ -18,15 +19,29 @@ public class User
     {
         this.UserName = UserName;
         this.Password = Password;
+        
     }
     
-    public User(String UserName, String Password, String Role) 
+    public User(String UserName, String Password, String Role, int id) 
     {
         this.UserName = UserName;
         this.Password = Password;
         this.Role = Role;
+        this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
+    
+    
+    
     public String getUserName() {
         return UserName;
     }

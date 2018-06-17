@@ -5,11 +5,18 @@
  */
 package Services;
 
+import Entities.User;
 import com.codename1.io.ConnectionRequest;
+import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkManager;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.codename1.io.Preferences;
+import com.codename1.ui.Dialog;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
+
+
 
 /**
  *
@@ -17,23 +24,34 @@ import java.io.OutputStream;
  */
 public class UserService 
 {
-    private void CallWebService()
-    {
-        ConnectionRequest post = new ConnectionRequest()
-        {
-            @Override
-            protected void buildRequestBody(OutputStream os) throws IOException {
-                //os.write(json.toString().getBytes("UTF-8"));
+    public boolean login(String username, String password) {
+        double status = -1;
+        boolean bool = false;
+        try {
+            ConnectionRequest r = new ConnectionRequest();
+            r.setPost(true);
+            r.setUrl("http://127.0.0.1:8000/auth/log");
+            r.addArgument("username", username);
+            r.addArgument("password", password);
+            NetworkManager.getInstance().addToQueueAndWait(r);
+            Map<String, Object> result = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(r.getResponseData()), "UTF-8"));
+            List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("root");
+            for (Map<String, Object> obj : list) {
+            if (Float.parseFloat(obj.get("status").toString())  == 1)
+            {   
+                Preferences.set("username",username);
+                bool = true;
+                
+            } else {
+                System.out.println("failure");
             }
+            }
+        } catch (Exception e) {
+            Dialog.show("An error has occured", "Server might be down", "ok","cancel");
+        }
 
-            @Override
-            protected void readResponse(InputStream input) throws IOException 
-            {
-                // parse response data
-            }   
-        };
-        post.setUrl("http://localhost:8093/halimatbank/cbs/staff");
-        post.setPost(true);
-        post.setContentType("application/json");
+        return bool;
     }
+    
+
 }

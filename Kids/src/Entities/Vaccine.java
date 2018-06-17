@@ -7,7 +7,7 @@ package Entities;
 
 /**
  *
- * @author mmsalemi
+ * @author MARWEN
  */
 public class Vaccine {
     public int id;    

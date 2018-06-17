@@ -89,15 +89,16 @@ public class Login extends Form
                     os.write(json.getBytes("UTF-8"));
                 }
             };
-            request.setUrl("http://localhost:8181/kids/web/app_dev.php/auth/login");
+            double status = -1;
+            request.setUrl("http://127.0.0.1:8000/auth/login");
             request.setContentType("application/json");
             request.addRequestHeader("username", "admin");
             request.addRequestHeader("password", "admin");
             request.setPost(true);
             NetworkManager.getInstance().addToQueueAndWait(request);
             Map<String,Object> Resualt = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(request.getResponseData()), "UTF-8"));
-
-            if(Resualt != null)
+            status = (double) Resualt.get("status");
+            if(status == 1)
             {
                 MyApplication.CurrentUser.setUserName((String)Resualt.get("username"));
                 MyApplication.CurrentUser.setPassword((String)Resualt.get("password"));
@@ -105,6 +106,7 @@ public class Login extends Form
                 MainMenu Menu = new MainMenu("Menu");
                 Menu.show();
             }
+            else { System.out.println("problem connexion");}
         }
         catch(IOException err) 
         {

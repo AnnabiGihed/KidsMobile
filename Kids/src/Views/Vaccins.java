@@ -8,24 +8,25 @@ package Views;
 import Entities.Vaccine;
 import Services.VaccinService;
 import com.codename1.io.Log;
+import com.codename1.io.Preferences;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
-import static com.codename1.ui.ComponentSelector.$;
 import com.codename1.ui.Container;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.Layout;
-import com.codename1.ui.table.TableLayout;
+import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author mmsalemi
+ * @author MARWEN
  */
 public class Vaccins extends Form{
 
@@ -49,6 +50,9 @@ public class Vaccins extends Form{
 
  public Form InitInterface()
     {
+        Label separator = new Label("", "BlueSeparatorLine");
+        
+        
              ArrayList<Vaccine> lst = vservice.getList();
             Container ContainerVaccins = new Container (BoxLayout.y());
             for(Vaccine s : lst) {
@@ -76,22 +80,16 @@ public class Vaccins extends Form{
                 c.addComponent(BorderLayout.EAST, priceLabel);
                 ageLabel = new Label("Age : "+String.valueOf(s.getAge())+ " mois");
                 ageLabel.setUIID("ageLabel");
-                descriptionLabel = new Label(s.getDescription().substring(0,55)+"...");
+                descriptionLabel = new Label(s.getDescription());
                 descriptionLabel.setUIID("descriptionLabel");
                 effetnegatifLabel = new Label("effet negatif :"+s.getEffetnegatif());
                 effetnegatifLabel.setUIID("effetnegativeLabel");
-                Label separator = this.createSeparator();
                 ContainerVaccins.add(c);
                 ContainerVaccins.add(ageLabel);
                 ContainerVaccins.add(descriptionLabel);
-                ContainerVaccins.add(separator);
-                
-                try {
-                Label i = new Label();
-                Image img = Image.createImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxRj0cAi1nyQT25Rg1LvRa4rIvUNRXuTdHlHPLUIXYE9UxAXU");
-                i.setIcon(img);
-                } catch (Exception e) {
-                }
+                ContainerVaccins.add("______________________________");
+
+               
                 
                 b.addActionListener(e -> Log.p("You picked: " + b.getText()));
             }
@@ -122,6 +120,7 @@ public class Vaccins extends Form{
     }
 
     public Vaccins() {
+       
     }
 
 
