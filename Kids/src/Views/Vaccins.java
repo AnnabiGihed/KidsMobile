@@ -6,22 +6,18 @@
 package Views;
 
 import Entities.Vaccine;
+import Services.EventService;
 import Services.VaccinService;
 import com.codename1.io.Log;
-import com.codename1.io.Preferences;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
-import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.Layout;
-import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
 
 /**
@@ -51,51 +47,44 @@ public class Vaccins extends Form{
  public Form InitInterface()
     {
         Label separator = new Label("", "BlueSeparatorLine");
-        
-        
-             ArrayList<Vaccine> lst = vservice.getList();
-            Container ContainerVaccins = new Container (BoxLayout.y());
-            for(Vaccine s : lst) {
-                
-        Label iconInjection = new Label();  
-        iconInjection.setTextPosition(Component.RIGHT);
-        iconInjection.setUIID("iconInjection");
-        iconInjection.setShowEvenIfBlank(true);
-                
-                
-                
-                Button b = new Button(s.getName());
-                Container c = new Container(new BorderLayout());
-                idLabel = new Label(String.valueOf(s.getId()));
-                idLabel.setUIID("IdLabel");
-                priceLabel = new Label(String.valueOf(s.getPrice()) +" TND");
-                priceLabel.setUIID("priceLabel");
-                nameLabel = new Label(s.getName());
-                nameLabel.setUIID("nameLabel");
-                
-                
-              
-                
-                c.addComponent(BorderLayout.WEST, nameLabel);
-                c.addComponent(BorderLayout.EAST, priceLabel);
-                ageLabel = new Label("Age : "+String.valueOf(s.getAge())+ " mois");
-                ageLabel.setUIID("ageLabel");
-                descriptionLabel = new Label(s.getDescription());
-                descriptionLabel.setUIID("descriptionLabel");
-                effetnegatifLabel = new Label("effet negatif :"+s.getEffetnegatif());
-                effetnegatifLabel.setUIID("effetnegativeLabel");
-                ContainerVaccins.add(c);
-                ContainerVaccins.add(ageLabel);
-                ContainerVaccins.add(descriptionLabel);
-                ContainerVaccins.add("______________________________");
 
-               
-                
-                b.addActionListener(e -> Log.p("You picked: " + b.getText()));
-            }
-            Form f = new Form("Liste des vaccins", new FlowLayout());
-            f.add(ContainerVaccins);
-            return f;
+        EventService test = new EventService();
+        ArrayList<Vaccine> lst = vservice.getList();
+        Container ContainerVaccins = new Container(BoxLayout.y());
+        for (Vaccine s : lst) {
+
+            Label iconInjection = new Label();
+            iconInjection.setTextPosition(Component.RIGHT);
+            iconInjection.setUIID("iconInjection");
+            iconInjection.setShowEvenIfBlank(true);
+
+            Button b = new Button(s.getName());
+            Container c = new Container(new BorderLayout());
+            idLabel = new Label(String.valueOf(s.getId()));
+            idLabel.setUIID("IdLabel");
+            priceLabel = new Label(String.valueOf(s.getPrice()) + " TND");
+            priceLabel.setUIID("priceLabel");
+            nameLabel = new Label(s.getName());
+            nameLabel.setUIID("nameLabel");
+
+            c.addComponent(BorderLayout.WEST, nameLabel);
+            c.addComponent(BorderLayout.EAST, priceLabel);
+            ageLabel = new Label("Age : " + String.valueOf(s.getAge()) + " mois");
+            ageLabel.setUIID("ageLabel");
+            descriptionLabel = new Label(s.getDescription());
+            descriptionLabel.setUIID("descriptionLabel");
+            effetnegatifLabel = new Label("effet negatif :" + s.getEffetnegatif());
+            effetnegatifLabel.setUIID("effetnegativeLabel");
+            ContainerVaccins.add(c);
+            ContainerVaccins.add(ageLabel);
+            ContainerVaccins.add(descriptionLabel);
+            ContainerVaccins.add("______________________________");
+
+            b.addActionListener(e -> Log.p("You picked: " + b.getText()));
+        }
+        Form f = new Form("Liste des vaccins", new FlowLayout());
+        f.add(ContainerVaccins);
+        return f;
     }
     
     

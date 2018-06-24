@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Services;
 
 import Entities.User;
@@ -15,13 +10,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
-
-
-
-/**
- *
- * @author annab
- */
+import com.mycompany.myapp.Consts;
+        
 public class UserService 
 {
     public boolean login(String username, String password) {
@@ -30,7 +20,8 @@ public class UserService
         try {
             ConnectionRequest r = new ConnectionRequest();
             r.setPost(true);
-            r.setUrl("http://127.0.0.1:8000/auth/log");
+            String Url = Consts.ServiceUrl + "auth/log";
+            r.setUrl(Url);
             r.addArgument("username", username);
             r.addArgument("password", password);
             NetworkManager.getInstance().addToQueueAndWait(r);

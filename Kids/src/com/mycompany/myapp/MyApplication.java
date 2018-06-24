@@ -1,8 +1,7 @@
 package com.mycompany.myapp;
 
 import Entities.User;
-import Views.Login;
-import Views.Vaccins;
+import Views.BasicMap;
 import static com.codename1.ui.CN.*;
 import com.codename1.ui.Form;
 import com.codename1.ui.Dialog;
@@ -11,10 +10,10 @@ import com.codename1.ui.util.Resources;
 import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 import Views.LoginForm;
-import java.io.IOException;
 
 public class MyApplication 
 {
+    
     public static User CurrentUser = new User();
     public static User user;
     private Form current;

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.mycompany.myapp.Consts;
 
 /**
  *
@@ -26,7 +27,8 @@ public class VaccinService {
     public ArrayList<Vaccine> getList() {
         ArrayList<Vaccine> listVaccins = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost:8000/list_vaccine");
+        String Url = Consts.ServiceUrl + "list_vaccine";
+        con.setUrl(Url);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
