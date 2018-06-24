@@ -8,6 +8,57 @@ public class Pediatrician
     protected String Name;
     protected double Price;
     protected Rating Rating;
+    protected String PhoneNumber;
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
+    }
+    
+    
+    
+    public Pediatrician() 
+    {
+        this.ID = 0;
+        this.m_Adresss = null;
+        this.m_Speciality = null;
+        this.Name = null;
+        this.Price = 0.0;
+        this.Rating = null;
+    }
+    
+    public Pediatrician(int ID) 
+    {
+        this.ID = ID;
+        this.m_Adresss = null;
+        this.m_Speciality = null;
+        this.Name = null;
+        this.Price = 0.0;
+        this.Rating = null;
+    }
+    
+    public Pediatrician(int ID, Address m_Adresss) 
+    {
+        this.ID = ID;
+        this.m_Adresss = m_Adresss;
+        this.m_Speciality = null;
+        this.Name = null;
+        this.Price = 0.0;
+        this.Rating = null;
+    }
+    
+    public Pediatrician(int ID, Address m_Adresss, Speciality m_Speciality) 
+    {
+        this.ID = ID;
+        this.m_Adresss = m_Adresss;
+        this.m_Speciality = m_Speciality;
+        this.Name = null;
+        this.Price = 0.0;
+        this.Rating = null;
+    }
     
     public Pediatrician(int ID, Address m_Adresss, Speciality m_Speciality, String Name) {
         this.ID = ID;

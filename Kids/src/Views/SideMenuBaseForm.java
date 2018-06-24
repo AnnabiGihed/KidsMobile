@@ -19,7 +19,6 @@
 
 package Views;
 
-import Services.EventService;
 import Views.Vaccins;
 import com.codename1.io.Preferences;
 import com.codename1.ui.Container;
@@ -65,9 +64,9 @@ public abstract class SideMenuBaseForm extends Form {
         sidemenuTop.setUIID("SidemenuTop");
 
         getToolbar().addComponentToSideMenu(sidemenuTop);
-        getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_ADD_ALERT,  e -> new EvenList("List des evenement").InitInterface().show());
-        getToolbar().addMaterialCommandToSideMenu("  Vaccins", FontImage.MATERIAL_ADD_BOX,  e -> new Vaccins("List des vaccins").InitInterface().show());
-        getToolbar().addMaterialCommandToSideMenu("  pediatrician", FontImage.MATERIAL_PEOPLE,  e -> showOtherForm(res));
+        getToolbar().addMaterialCommandToSideMenu("  Events", FontImage.MATERIAL_ADD_ALERT,  e -> new EvenList("List des evenement",this).show());
+        getToolbar().addMaterialCommandToSideMenu("  Vaccins", FontImage.MATERIAL_ADD_BOX,  e -> new Vaccins("List des vaccins",this).InitInterface().show());
+        getToolbar().addMaterialCommandToSideMenu("  pediatrician", FontImage.MATERIAL_PEOPLE,  e -> new PediatrcianList("List des Pediatrcian",this).show());
         getToolbar().addMaterialCommandToSideMenu("  Establishments", FontImage.MATERIAL_ADD_LOCATION,  e -> showOtherForm(res));
         getToolbar().addMaterialCommandToSideMenu("  Logout", FontImage.MATERIAL_EXIT_TO_APP,  e -> new LoginForm(res).show());
     }  

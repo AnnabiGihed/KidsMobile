@@ -6,10 +6,14 @@
 package Views;
 
 import com.codename1.googlemaps.MapContainer;
+import com.codename1.googlemaps.MapContainer.MarkerOptions;
+import com.codename1.location.Location;
+import com.codename1.location.LocationManager;
 import com.codename1.maps.Coord;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.layouts.BorderLayout;
@@ -17,18 +21,23 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
 
 /**
  *
  * @author annab
  */
+//Map Key : AIzaSyDYsqMv3kobxelZdNeQz2V-b5uKqP5WiyE
+public class BasicMap extends Form {
 
-    //Map Key : AIzaSyDYsqMv3kobxelZdNeQz2V-b5uKqP5WiyE
-public class BasicMap extends Form
-{
+    private Form preForm;
+    double longi;
+    double latit;
+    final MapContainer cnt = new MapContainer("AIzaSyDYsqMv3kobxelZdNeQz2V-b5uKqP5WiyE");
 
-    public BasicMap() 
-    {
+    public BasicMap(double longi, double latit) {
+        this.longi = longi;
+        this.latit = latit;
         Initialize();
     }
 
@@ -46,11 +55,9 @@ public class BasicMap extends Form
         super(title, contentPaneLayout);
         Initialize();
     }
-    
-    private void Initialize()
-    {
+
+    private void Initialize() {
         setLayout(new BorderLayout());
-        final MapContainer cnt = new MapContainer("AIzaSyDYsqMv3kobxelZdNeQz2V-b5uKqP5WiyE");
 
         Style s = new Style();
         s.setFgColor(0xff0000);
@@ -58,44 +65,17 @@ public class BasicMap extends Form
         FontImage markerImg = FontImage.createMaterial(FontImage.MATERIAL_PLACE, s, Display.getInstance().convertToPixels(3));
 
         Button btnAddPath = new Button("Add Path");
-        btnAddPath.addActionListener(e->{
-
-            cnt.addPath(
-                    cnt.getCameraPosition(),
-                    new Coord(-33.866, 151.195), // Sydney
-                    new Coord(-18.142, 178.431),  // Fiji
-                    new Coord(21.291, -157.821),  // Hawaii
-                    new Coord(37.423, -122.091)  // Mountain View
-            );
+        btnAddPath.addActionListener(e
+                -> {
+            MarkerOptions lmo = new MarkerOptions(new Coord(latit, longi), markerImg.toEncodedImage());
+            cnt.addMarker(lmo);
+            cnt.setCameraPosition(new Coord(latit, longi));
         });
 
         Button btnClearAll = new Button("Clear All");
-        btnClearAll.addActionListener(e->{
+        btnClearAll.addActionListener(e -> {
             cnt.clearMapLayers();
         });
-
-//        cnt.addTapListener(e->{
-//            TextField enterName = new TextField();
-//            Container wrapper = BoxLayout.encloseY(new Label("Name:"), enterName);
-//            InteractionDialog dlg = new InteractionDialog("Add Marker");
-//            dlg.getContentPane().add(wrapper);
-//            enterName.setDoneListener(e2->{
-//                String txt = enterName.getText();
-//                cnt.addMarker(
-//                        EncodedImage.createFromImage(markerImg, false),
-//                        cnt.getCoordAtPosition(e.getX(), e.getY()),
-//                        enterName.getText(),
-//                        "",
-//                        e3->{
-//                                ToastBar.showMessage("You clicked "+txt, FontImage.MATERIAL_PLACE);
-//                        }
-//                );
-//                dlg.dispose();
-//            });
-//            dlg.showPopupDialog(new Rectangle(e.getX(), e.getY(), 10, 10));
-//            enterName.startEditingAsync();
-//        });
-
         Container root = LayeredLayout.encloseIn(
                 BorderLayout.center(cnt),
                 BorderLayout.south(
@@ -104,5 +84,18 @@ public class BasicMap extends Form
         );
 
         add(BorderLayout.CENTER, root);
+        
+        Style ss = UIManager.getInstance().getComponentStyle("TitleCommand");
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, ss);
+        getToolbar().addCommandToLeftBar("", icon, (e) -> preForm.showBack());
     }
+
+    public Form getPreForm() {
+        return preForm;
+    }
+
+    public void setPreForm(Form preForm) {
+        this.preForm = preForm;
+    }
+    
 }

@@ -9,6 +9,16 @@ public class Event
     protected String Description;
     protected Date m_Date;
     protected Establishment m_Establishment;
+    protected String PhoneNumber;
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
+    }
+    
     
     public Event() {
         this.ID = 0;

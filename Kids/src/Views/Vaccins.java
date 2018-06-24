@@ -12,12 +12,15 @@ import com.codename1.io.Log;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.Layout;
+import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +36,7 @@ public class Vaccins extends Form{
     Label effetnegatifLabel;
     Label priceLabel;
     VaccinService vservice = new VaccinService();
+    Form PreviousForm;
     
     
     private Label createSeparator() {
@@ -83,6 +87,9 @@ public class Vaccins extends Form{
             b.addActionListener(e -> Log.p("You picked: " + b.getText()));
         }
         Form f = new Form("Liste des vaccins", new FlowLayout());
+        Style s = UIManager.getInstance().getComponentStyle("TitleCommand");
+        FontImage icon = FontImage.createMaterial(FontImage.MATERIAL_ARROW_BACK, s);
+        f.getToolbar().addCommandToLeftBar("", icon, (e) -> PreviousForm.showBack());
         f.add(ContainerVaccins);
         return f;
     }
@@ -90,21 +97,24 @@ public class Vaccins extends Form{
     
  
  
-     public Vaccins(String title) 
+     public Vaccins(String title, Form PreviousForm) 
     {
         super(title);
+        this.PreviousForm = PreviousForm;
         InitInterface();
     }
 
-    public Vaccins(Layout contentPaneLayout) 
+    public Vaccins(Layout contentPaneLayout, Form PreviousForm) 
     {
         super(contentPaneLayout);
+        this.PreviousForm = PreviousForm;
         InitInterface();
     }
 
-    public Vaccins(String title, Layout contentPaneLayout) 
+    public Vaccins(String title, Layout contentPaneLayout, Form PreviousForm) 
     {
         super(title, contentPaneLayout);
+        this.PreviousForm = PreviousForm;
         InitInterface();
     }
 

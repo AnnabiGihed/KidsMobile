@@ -1,28 +1,27 @@
 package Services;
 
+import Entities.Speciality;
 import Entities.Address;
-import Entities.Establishment;
-import Entities.Event;
+import Entities.Pediatrician;
 import Entities.Rating;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
-import java.util.ArrayList;
 import com.mycompany.myapp.Consts;
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class EventService {
-
-    public ArrayList<Event> GetAllEvents() 
+public class PediatricianService 
+{
+    public ArrayList<Pediatrician> GetAllPediatrician() 
     {
-        ArrayList<Event> ListEvent = new ArrayList<>();
+        ArrayList<Pediatrician> ListPediatrician = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        String Url = Consts.ServiceUrl + "api/events";
+        String Url = Consts.ServiceUrl + "api/pediatricians";
         con.setUrl(Url);
         con.setPost(false);
         NetworkManager.getInstance().addToQueueAndWait(con);
@@ -36,43 +35,24 @@ public class EventService {
                 java.util.List<Map<String, Object>> content = (java.util.List<Map<String, Object>>) data.get("root");
                 for (Map<String, Object> obj : content) 
                 {
-                    Event CurrentEvent = new Event();
+                    Pediatrician CurrentPediatrician = new Pediatrician();
                     
-                    CurrentEvent.setID((int)Float.parseFloat(obj.get("id").toString()));     
-                    CurrentEvent.setName(obj.get("name").toString());
-                    CurrentEvent.setPhoneNumber(obj.get("tel").toString());
-                    CurrentEvent.setDescription(obj.get("description").toString());
-                    CurrentEvent.setM_Date(RetriveDate((LinkedHashMap<String, Object>)obj.get("date")));
-                    CurrentEvent.setM_Establishment(RetriveEstablishment((LinkedHashMap<String, Object>)obj.get("Establishment")));
-                    ListEvent.add(CurrentEvent);
+                    CurrentPediatrician.setID((int)Float.parseFloat(obj.get("id").toString()));     
+                    CurrentPediatrician.setName(obj.get("name").toString());
+                    CurrentPediatrician.setPhoneNumber(obj.get("tel").toString());
+                    CurrentPediatrician.setM_Adresss(RetriveAddress((LinkedHashMap<String, Object>)obj.get("address")));
+                    CurrentPediatrician.setPrice(Float.parseFloat(obj.get("price").toString()));
+                    CurrentPediatrician.setM_Speciality(RetriveSpeciality((LinkedHashMap<String, Object>)obj.get("speciality")));
+                    CurrentPediatrician.setRating(RetriveRating((LinkedHashMap<String, Object>)obj.get("rating")));
+                    ListPediatrician.add(CurrentPediatrician);
                 }
                 
             } catch (IOException err) {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
-        return ListEvent;
+        return ListPediatrician;
     }
-
-    public Date RetriveDate(LinkedHashMap<String, Object> DateMap) 
-    {
-        float Offset = Float.parseFloat(DateMap.get("offset").toString());
-        float timestamp = Float.parseFloat(DateMap.get("timestamp").toString());
-        return new Date((long) ((timestamp + Offset) *1000));
-    }
-    
-    public Establishment RetriveEstablishment(LinkedHashMap<String, Object> EstablishmentMap)
-    {
-        Establishment CurrentEstablishment = new Establishment();
-        CurrentEstablishment.setID((int) Float.parseFloat(EstablishmentMap.get("id").toString()));
-        CurrentEstablishment.setName(EstablishmentMap.get("name").toString());
-        CurrentEstablishment.setDescription(EstablishmentMap.get("description").toString());
-        CurrentEstablishment.setM_Address(RetriveAddress((LinkedHashMap<String, Object>)EstablishmentMap.get("address")));
-        CurrentEstablishment.setRating(RetriveRating((LinkedHashMap<String, Object>)EstablishmentMap.get("rating")));
-        CurrentEstablishment.setPhoto(EstablishmentMap.get("photo").toString());
-        return CurrentEstablishment;
-    }
-    
     public Address RetriveAddress(LinkedHashMap<String, Object> AddressMap)
     {
         Address CurrentAddress = new Address();
@@ -92,4 +72,14 @@ public class EventService {
         CurrentRating.setDescription(RatingMap.get("description").toString());
         return CurrentRating;
     }
+    
+    public Speciality RetriveSpeciality(LinkedHashMap<String, Object> SpecialityMap)
+    {
+        Speciality  CurrentSpeciality = new Speciality();
+        CurrentSpeciality.setId((int) Float.parseFloat(SpecialityMap.get("id").toString()));
+        CurrentSpeciality.setName(SpecialityMap.get("name").toString());
+        CurrentSpeciality.setDescription(SpecialityMap.get("description").toString());
+        return CurrentSpeciality;
+    }
+    
 }
